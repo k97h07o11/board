@@ -31,4 +31,9 @@ public class CommentService {
         comment.setUser(user);
         commentRepository.save(comment);
     }
+
+    public void editComment(Long commentId, Comment comment) {
+        comment.setId(commentId);
+        commentRepository.save(comment);
+    }
 }

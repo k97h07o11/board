@@ -31,4 +31,12 @@ public class CommentController {
     ) {
         commentService.writeComment(articleId, comment, userDetails.getUser());
     }
+
+    @PutMapping("/comments/{commentId}")
+    public void putComment(
+            @PathVariable Long commentId,
+            @RequestBody Comment comment
+    ) {
+        commentService.editComment(commentId, comment);
+    }
 }
