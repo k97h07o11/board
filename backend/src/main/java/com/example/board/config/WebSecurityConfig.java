@@ -24,7 +24,9 @@ public class WebSecurityConfig {
                 .disable()
                 .authorizeHttpRequests((requests) -> requests
                         .anyRequest().permitAll()
-                );
+                )
+                .formLogin()
+                .loginProcessingUrl("/users/login");
 
         return http.build();
     }
