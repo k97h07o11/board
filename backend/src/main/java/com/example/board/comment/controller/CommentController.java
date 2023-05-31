@@ -2,10 +2,10 @@ package com.example.board.comment.controller;
 
 import com.example.board.comment.entity.Comment;
 import com.example.board.comment.service.CommentService;
+import com.example.board.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +21,14 @@ public class CommentController {
     ) {
         List<Comment> comments = commentService.getCommentsByArticleId(articleId);
         return comments;
+    }
+
+    @PostMapping("/articles/{articleId}/comments")
+    public void postComment(
+            @PathVariable Long articleId,
+            @RequestBody Comment comment,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        commentService.writeComment(articleId, comment, userDetails.getUser());
     }
 }
