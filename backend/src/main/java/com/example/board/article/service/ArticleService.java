@@ -2,6 +2,7 @@ package com.example.board.article.service;
 
 import com.example.board.article.entity.Article;
 import com.example.board.article.repository.ArticleRepository;
+import com.example.board.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,10 @@ public class ArticleService {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(NoSuchElementException::new);
         return article;
+    }
+
+    public void writeArticle(Article article, User user) {
+        article.setUser(user);
+        articleRepository.save(article);
     }
 }
