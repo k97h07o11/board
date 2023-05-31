@@ -45,4 +45,11 @@ public class ArticleController {
     ) {
         articleService.editArticle(articleId, article);
     }
+
+    @DeleteMapping("/{articleId}")
+    public void deleteArticle(
+            @PathVariable Long articleId
+    ) {
+        articleService.deleteArticle(articleId);
+    }
 }
