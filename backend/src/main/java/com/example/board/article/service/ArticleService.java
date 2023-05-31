@@ -30,4 +30,9 @@ public class ArticleService {
         article.setUser(user);
         articleRepository.save(article);
     }
+
+    public void editArticle(Long articleId, Article article) {
+        article.setId(articleId);
+        articleRepository.save(article);
+    }
 }

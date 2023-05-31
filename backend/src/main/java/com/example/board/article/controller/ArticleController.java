@@ -37,4 +37,12 @@ public class ArticleController {
     ) {
         articleService.writeArticle(article, userDetails.getUser());
     }
+
+    @PutMapping("/{articleId}")
+    public void putArticle(
+            @PathVariable Long articleId,
+            @RequestBody Article article
+    ) {
+        articleService.editArticle(articleId, article);
+    }
 }
