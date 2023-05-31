@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -16,5 +17,11 @@ public class ArticleService {
     public List<Article> getArticleList() {
         List<Article> articles = articleRepository.findAll();
         return articles;
+    }
+
+    public Article getArticle(Long articleId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(NoSuchElementException::new);
+        return article;
     }
 }
