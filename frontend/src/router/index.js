@@ -14,6 +14,11 @@ const routes = [
     name: "join",
     component: () => import("@/views/user/JoinView"),
   },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/user/LoginView"),
+  },
 ];
 
 const router = new VueRouter({
