@@ -4,9 +4,10 @@ import com.example.board.article.entity.Article;
 import com.example.board.article.repository.ArticleRepository;
 import com.example.board.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -15,8 +16,8 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
 
-    public List<Article> getArticleList() {
-        List<Article> articles = articleRepository.findAll();
+    public Page<Article> getArticleList(Pageable pageable) {
+        Page<Article> articles = articleRepository.findAll(pageable);
         return articles;
     }
 

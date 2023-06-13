@@ -4,10 +4,10 @@ import com.example.board.article.entity.Article;
 import com.example.board.article.service.ArticleService;
 import com.example.board.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +17,8 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @GetMapping
-    public List<Article> getArticles() {
-        List<Article> articles = articleService.getArticleList();
+    public Page<Article> getArticles(Pageable pageable) {
+        Page<Article> articles = articleService.getArticleList(pageable);
         return articles;
     }
 

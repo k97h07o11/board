@@ -1,7 +1,7 @@
 import http from "@/api/index";
 
-function getArticleList() {
-  return http.get(`/articles`);
+function getArticleList(pageNum) {
+  return http.get(`/articles?page=${pageNum}`);
 }
 
 function getArticle(articleId) {

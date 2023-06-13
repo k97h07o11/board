@@ -7,6 +7,13 @@
         </a>
       </template>
     </b-table>
+
+    <b-pagination
+      align="center"
+      :per-page="perPage"
+      :total-rows="totalElements"
+      v-model="currentPage"
+    ></b-pagination>
   </div>
 </template>
 
@@ -24,39 +31,30 @@ export default {
         { key: "createdDate", label: "작성일" },
         { key: "view", label: "조회" },
       ],
-      items: [
-        {
-          id: 1,
-          title: "제목 1",
-          writer: "작성자 1",
-          createdDate: "2023.06.08.",
-          view: "100",
-        },
-        {
-          id: 2,
-          title: "제목 2",
-          writer: "작성자 2",
-          createdDate: "2023.06.09.",
-          view: "200",
-        },
-        {
-          id: 3,
-          title: "제목 3",
-          writer: "작성자 3",
-          createdDate: "2023.06.10.",
-          view: "300",
-        },
-      ],
+      items: [],
+      currentPage: 1,
+      totalElements: 0,
+      perPage: 20,
     };
   },
+  watch: {
+    currentPage: "getArticleList",
+  },
   created() {
-    getArticleList()
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.getArticleList();
+  },
+  methods: {
+    getArticleList() {
+      getArticleList(this.currentPage - 1)
+        .then((response) => {
+          let data = response.data;
+          this.items = data.content;
+          this.totalElements = data.totalElements;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
