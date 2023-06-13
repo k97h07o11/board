@@ -1,6 +1,7 @@
 package com.example.board.comment.entity;
 
 import com.example.board.article.entity.Article;
+import com.example.board.common.BaseTimeEntity;
 import com.example.board.user.entity.User;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Setter
-public class Comment {
+public class Comment extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
