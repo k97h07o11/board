@@ -2,9 +2,9 @@
   <div>
     <b-table :fields="fields" :items="items">
       <template #cell(title)="data">
-        <a href="#">
+        <router-link :to="`/article/detail?articleId=${data.item.id}`">
           {{ data.value }}
-        </a>
+        </router-link>
       </template>
     </b-table>
 

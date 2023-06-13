@@ -24,6 +24,11 @@ const routes = [
     name: "list",
     component: () => import("@/views/article/ArticleListView"),
   },
+  {
+    path: "/article/detail",
+    name: "detail",
+    component: () => import("@/views/article/ArticleDetailView"),
+  },
 ];
 
 const router = new VueRouter({
