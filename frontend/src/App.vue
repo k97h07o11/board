@@ -12,14 +12,14 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item to="/login">로그인</b-nav-item>
-          <b-nav-item-dropdown right>
+          <b-nav-item v-if="!isAuthenticated" to="/login">로그인</b-nav-item>
+          <b-nav-item-dropdown v-else right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
-              <em>k97h07o11님</em>
+              <em>{{ getUser }}님</em>
             </template>
             <b-dropdown-item to="/mypage">마이페이지</b-dropdown-item>
-            <b-dropdown-item>로그아웃</b-dropdown-item>
+            <b-dropdown-item @click="logout">로그아웃</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -27,3 +27,16 @@
     <router-view />
   </div>
 </template>
+
+<script>
+import { mapGetters, mapActions } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters(["isAuthenticated", "getUser"]),
+  },
+  methods: {
+    ...mapActions(["logout"]),
+  },
+};
+</script>

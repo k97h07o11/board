@@ -39,10 +39,13 @@ export default {
     login: function () {
       login(this.username, this.password)
         .then((response) => {
-          console.log(response);
+          const token = response.data;
+          this.$store.dispatch("login", token);
+          this.$router.push("/");
         })
         .catch((error) => {
           console.log(error);
+          alert("아이디 또는 비밀번호를 확인해주세요.");
         });
     },
   },
