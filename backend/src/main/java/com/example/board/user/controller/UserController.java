@@ -1,5 +1,6 @@
 package com.example.board.user.controller;
 
+import com.example.board.security.UserDetailsImpl;
 import com.example.board.user.entity.User;
 import com.example.board.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,8 @@ public class UserController {
 
         long expiry = 36000L;
 
+        Long userId = ((UserDetailsImpl) authentication.getPrincipal()).getUser().getId();
+
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
@@ -48,7 +51,7 @@ public class UserController {
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiry))
-                .subject(authentication.getName())
+                .subject(String.valueOf(userId))
                 .claim("scope", scope)
                 .build();
 
