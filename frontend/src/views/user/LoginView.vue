@@ -21,6 +21,13 @@
         <b-button variant="primary" block @click="login">로그인</b-button>
       </b-form>
     </b-card>
+    <div class="d-flex justify-content-center gap-3 mt-3">
+      <b-link href="#">아이디 찾기</b-link>
+      <div class="vr"></div>
+      <b-link href="#">비밀번호 찾기</b-link>
+      <div class="vr"></div>
+      <b-link to="/join">회원가입</b-link>
+    </div>
   </div>
 </template>
 
@@ -51,3 +58,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.vr {
+  display: inline-block;
+  align-self: stretch;
+  width: 1px;
+  min-height: 1em;
+  background-color: currentColor;
+  opacity: 0.25;
+}
+
+.gap-3 {
+  gap: 1rem !important;
+}
+</style>
