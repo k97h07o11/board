@@ -8,6 +8,12 @@
       </template>
     </b-table>
 
+    <div class="clearfix">
+      <b-button to="/article/write" variant="primary" class="float-right">
+        글쓰기
+      </b-button>
+    </div>
+
     <b-pagination
       align="center"
       :per-page="perPage"

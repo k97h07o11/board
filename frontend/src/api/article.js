@@ -1,4 +1,5 @@
 import http from "@/api/index";
+import store from "@/store/index";
 
 function getArticleList(pageNum) {
   return http.get(`/articles?page=${pageNum}`);
@@ -9,8 +10,11 @@ function getArticle(articleId) {
 }
 
 function writeArticle(data) {
-  http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
-  return http.post(`/articles`, data);
+  return http.post(`/articles`, data, {
+    headers: {
+      Authorization: `Bearer ${store.state.token}`,
+    },
+  });
 }
 
 function editArticle(articleId, data) {
