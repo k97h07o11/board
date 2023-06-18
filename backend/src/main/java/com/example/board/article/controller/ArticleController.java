@@ -2,11 +2,10 @@ package com.example.board.article.controller;
 
 import com.example.board.article.entity.Article;
 import com.example.board.article.service.ArticleService;
-import com.example.board.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,11 +30,12 @@ public class ArticleController {
     }
 
     @PostMapping
-    public void postArticle(
+    public Long postArticle(
             @RequestBody Article article,
-            @AuthenticationPrincipal UserDetailsImpl userDetails
+            Authentication authentication
     ) {
-        articleService.writeArticle(article, userDetails.getUser());
+        Long userId = Long.parseLong(authentication.getName());
+        return articleService.writeArticle(article, userId);
     }
 
     @PutMapping("/{articleId}")

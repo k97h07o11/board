@@ -3,6 +3,7 @@ package com.example.board.article.service;
 import com.example.board.article.entity.Article;
 import com.example.board.article.repository.ArticleRepository;
 import com.example.board.user.entity.User;
+import com.example.board.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,8 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
 
+    private final UserRepository userRepository;
+
     public Page<Article> getArticleList(Pageable pageable) {
         Page<Article> articles = articleRepository.findAll(pageable);
         return articles;
@@ -27,9 +30,11 @@ public class ArticleService {
         return article;
     }
 
-    public void writeArticle(Article article, User user) {
+    public Long writeArticle(Article article, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(NoSuchElementException::new);
         article.setUser(user);
-        articleRepository.save(article);
+        return articleRepository.save(article).getId();
     }
 
     public void editArticle(Long articleId, Article article) {
