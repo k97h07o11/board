@@ -24,4 +24,6 @@ public class Article extends BaseTimeEntity {
 
     @ManyToOne
     private User user;
+
+    private int view;
 }
