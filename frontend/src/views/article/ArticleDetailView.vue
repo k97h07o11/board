@@ -7,14 +7,14 @@
 
       <div v-if="isWriter" class="d-flex justify-content-end gap-3">
         <b-button href="#" variant="warning">수정</b-button>
-        <b-button href="#" variant="danger">삭제</b-button>
+        <b-button variant="danger" @click="deleteArticle">삭제</b-button>
       </div>
     </b-card>
   </div>
 </template>
 
 <script>
-import { getArticle } from "@/api/article";
+import { getArticle, deleteArticle } from "@/api/article";
 import { mapGetters } from "vuex";
 
 export default {
@@ -45,6 +45,21 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+  },
+  methods: {
+    deleteArticle() {
+      if (confirm("게시글을 삭제하시겠습니까?")) {
+        deleteArticle(this.articleId)
+          .then((response) => {
+            console.log(response);
+            alert("게시글 삭제 완료");
+            this.$router.push("/article/list");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
   },
 };
 </script>

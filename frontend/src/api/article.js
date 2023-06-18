@@ -22,7 +22,11 @@ function editArticle(articleId, data) {
 }
 
 function deleteArticle(articleId) {
-  return http.delete(`/articles/${articleId}`);
+  return http.delete(`/articles/${articleId}`, {
+    headers: {
+      Authorization: `Bearer ${store.state.token}`,
+    },
+  });
 }
 
 export { getArticleList, getArticle, writeArticle, editArticle, deleteArticle };
