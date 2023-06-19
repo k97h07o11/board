@@ -1,6 +1,7 @@
 package com.example.board.comment.controller;
 
-import com.example.board.comment.entity.Comment;
+import com.example.board.comment.dto.CommentRequestDto;
+import com.example.board.comment.dto.CommentResponseDto;
 import com.example.board.comment.service.CommentService;
 import com.example.board.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -16,28 +17,27 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/articles/{articleId}/comments")
-    public List<Comment> getComments(
+    public List<CommentResponseDto> getComments(
             @PathVariable Long articleId
     ) {
-        List<Comment> comments = commentService.getCommentsByArticleId(articleId);
-        return comments;
+        return commentService.getCommentsByArticleId(articleId);
     }
 
     @PostMapping("/articles/{articleId}/comments")
     public void postComment(
             @PathVariable Long articleId,
-            @RequestBody Comment comment,
+            @RequestBody CommentRequestDto commentRequestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        commentService.writeComment(articleId, comment, userDetails.getUser());
+        commentService.writeComment(articleId, commentRequestDto, userDetails.getUser());
     }
 
     @PutMapping("/comments/{commentId}")
     public void putComment(
             @PathVariable Long commentId,
-            @RequestBody Comment comment
+            @RequestBody CommentRequestDto commentRequestDto
     ) {
-        commentService.editComment(commentId, comment);
+        commentService.editComment(commentId, commentRequestDto);
     }
 
     @DeleteMapping("/comments/{commentId}")

@@ -26,4 +26,8 @@ public class Comment extends BaseTimeEntity {
 
     @ManyToOne
     private User user;
+
+    public void edit(String content) {
+        this.content = content;
+    }
 }

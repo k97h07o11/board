@@ -1,5 +1,8 @@
 package com.example.board.article.service;
 
+import com.example.board.article.dto.ArticleListResponseDto;
+import com.example.board.article.dto.ArticleRequestDto;
+import com.example.board.article.dto.ArticleResponseDto;
 import com.example.board.article.entity.Article;
 import com.example.board.article.repository.ArticleRepository;
 import com.example.board.comment.repository.CommentRepository;
@@ -23,26 +26,29 @@ public class ArticleService {
 
     private final UserRepository userRepository;
 
-    public Page<Article> getArticleList(Pageable pageable) {
+    public Page<ArticleListResponseDto> getArticleList(Pageable pageable) {
         Page<Article> articles = articleRepository.findAll(pageable);
-        return articles;
+        return articles.map(ArticleListResponseDto::new);
     }
 
-    public Article getArticle(Long articleId) {
+    public ArticleResponseDto getArticle(Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(NoSuchElementException::new);
-        return article;
+        return new ArticleResponseDto(article);
     }
 
-    public Long writeArticle(Article article, Long userId) {
+    public Long writeArticle(ArticleRequestDto articleRequestDto, Long userId) {
+        Article article = articleRequestDto.toEntity();
         User user = userRepository.findById(userId)
                 .orElseThrow(NoSuchElementException::new);
         article.setUser(user);
         return articleRepository.save(article).getId();
     }
 
-    public void editArticle(Long articleId, Article article) {
-        article.setId(articleId);
+    public void editArticle(Long articleId, ArticleRequestDto articleRequestDto) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(NoSuchElementException::new);
+        article.edit(articleRequestDto.getTitle(), articleRequestDto.getContent());
         articleRepository.save(article);
     }
 

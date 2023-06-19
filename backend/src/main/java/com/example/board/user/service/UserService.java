@@ -1,5 +1,6 @@
 package com.example.board.user.service;
 
+import com.example.board.user.dto.JoinRequestDto;
 import com.example.board.user.entity.User;
 import com.example.board.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,8 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public void join(User user) {
+    public void join(JoinRequestDto joinRequestDto) {
+        User user = joinRequestDto.toEntity();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }

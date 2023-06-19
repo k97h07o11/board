@@ -1,7 +1,7 @@
 package com.example.board.user.controller;
 
 import com.example.board.security.UserDetailsImpl;
-import com.example.board.user.entity.User;
+import com.example.board.user.dto.JoinRequestDto;
 import com.example.board.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
@@ -19,21 +18,20 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
 
     private final JwtEncoder encoder;
 
-    @PostMapping("/join")
+    @PostMapping("/users")
     public void join(
-            @RequestBody User user
+            @RequestBody JoinRequestDto joinRequestDto
     ) {
-        userService.join(user);
+        userService.join(joinRequestDto);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/token")
     public String login(
             Authentication authentication
     ) {

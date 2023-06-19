@@ -26,4 +26,9 @@ public class Article extends BaseTimeEntity {
     private User user;
 
     private int view;
+
+    public void edit(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
