@@ -17,42 +17,42 @@
       <div>
         <h3>댓글</h3>
 
-        <b-card class="border-2">
-          <div class="font-weight-bold mb-2">{{ getUser }}</div>
-
-          <b-form-textarea
-            id="comment"
-            v-model="newComment"
-            placeholder="댓글"
-            rows="3"
-            max-rows="10"
-            maxlength="3000"
-            class="border-0 p-0 shadow-none mb-3"
-          ></b-form-textarea>
-
-          <div class="clearfix">
-            <b-button variant="primary" class="float-right">등록</b-button>
-          </div>
-        </b-card>
+        <CommentWriter v-model="newComment" />
 
         <b-list-group flush>
           <b-list-group-item v-for="comment in comments" :key="comment.id">
-            <div class="font-weight-bold">{{ comment.username }}</div>
-            <div>{{ comment.content }}</div>
-            <div>{{ comment.createdDate }}</div>
-            <b-dropdown
-              right
-              variant="link"
-              toggle-class="text-decoration-none shadow-none p-0"
-              no-caret
-              class="position-absolute top-0 end-0 mt-3 mr-3"
+            <template
+              v-if="!isAuthenticated || comment.id != editingComment.id"
             >
-              <template #button-content>
-                <b-icon icon="three-dots-vertical" variant="secondary"></b-icon>
-              </template>
-              <b-dropdown-item href="#">수정</b-dropdown-item>
-              <b-dropdown-item href="#">삭제</b-dropdown-item>
-            </b-dropdown>
+              <div class="font-weight-bold">{{ comment.username }}</div>
+              <div>{{ comment.content }}</div>
+              <div>{{ comment.createdDate }}</div>
+              <b-dropdown
+                v-if="comment.userId == getUser"
+                right
+                variant="link"
+                toggle-class="text-decoration-none shadow-none p-0"
+                no-caret
+                class="position-absolute top-0 end-0 mt-3 mr-3"
+              >
+                <template #button-content>
+                  <b-icon
+                    icon="three-dots-vertical"
+                    variant="secondary"
+                  ></b-icon>
+                </template>
+                <b-dropdown-item @click="editComment(comment)">
+                  수정
+                </b-dropdown-item>
+                <b-dropdown-item href="#">삭제</b-dropdown-item>
+              </b-dropdown>
+            </template>
+            <CommentWriter
+              v-else
+              v-model="editingComment.content"
+              edit
+              @cancel="cancelEditComment"
+            />
           </b-list-group-item>
         </b-list-group>
       </div>
@@ -63,9 +63,13 @@
 <script>
 import { getArticle, deleteArticle } from "@/api/article";
 import { mapGetters } from "vuex";
+import CommentWriter from "@/components/CommentWriter.vue";
 
 export default {
   name: "ArticleView",
+  components: {
+    CommentWriter,
+  },
   data() {
     return {
       articleId: null,
@@ -75,22 +79,28 @@ export default {
       newComment: "",
       comments: [
         {
+          id: 1,
           content: "댓글 1",
           userId: 1,
           username: "username",
           createdDate: "YYYY-MM-DD",
         },
         {
+          id: 2,
           content: "댓글 2",
           userId: 2,
           username: "k97h07o11",
           createdDate: "YYYY-MM-DD",
         },
       ],
+      editingComment: {
+        id: null,
+        content: null,
+      },
     };
   },
   computed: {
-    ...mapGetters(["getUser"]),
+    ...mapGetters(["isAuthenticated", "getUser"]),
     isWriter() {
       return this.getUser == this.writerId;
     },
@@ -122,6 +132,14 @@ export default {
           });
       }
     },
+    editComment(comment) {
+      this.editingComment.content = comment.content;
+      this.editingComment.id = comment.id;
+    },
+    cancelEditComment() {
+      this.editingComment.id = null;
+      this.editingComment.content = null;
+    },
   },
 };
 </script>
@@ -129,10 +147,6 @@ export default {
 <style scoped>
 .gap-3 {
   gap: 1rem !important;
-}
-
-.border-2 {
-  border-width: 2px;
 }
 
 .top-0 {
