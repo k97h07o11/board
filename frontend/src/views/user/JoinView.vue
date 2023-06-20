@@ -36,7 +36,7 @@ export default {
     };
   },
   methods: {
-    join: function () {
+    join() {
       join({
         username: this.username,
         password: this.password,

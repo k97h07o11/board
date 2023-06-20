@@ -1,12 +1,12 @@
 import http from "@/api/index";
 
 function join(data) {
-  return http.post(`/users/join`, data);
+  return http.post(`/users`, data);
 }
 
 function login(username, password) {
   return http.post(
-    `/users/login`,
+    `/auth/token`,
     {
       grant_type: "authorization_code",
     },

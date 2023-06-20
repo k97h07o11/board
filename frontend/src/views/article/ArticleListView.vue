@@ -2,14 +2,14 @@
   <div>
     <b-table :fields="fields" :items="items">
       <template #cell(title)="data">
-        <router-link :to="`/article/detail?articleId=${data.item.id}`">
+        <router-link :to="`/view?articleId=${data.item.id}`">
           {{ data.value }}
         </router-link>
       </template>
     </b-table>
 
     <div class="clearfix">
-      <b-button to="/article/write" variant="primary" class="float-right">
+      <b-button to="/write" variant="primary" class="float-right">
         글쓰기
       </b-button>
     </div>
@@ -33,7 +33,7 @@ export default {
       fields: [
         { key: "id", label: "번호" },
         { key: "title", label: "제목" },
-        { key: "writer", label: "작성자" },
+        { key: "username", label: "작성자" },
         { key: "createdDate", label: "작성일" },
         { key: "view", label: "조회" },
       ],

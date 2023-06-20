@@ -21,17 +21,17 @@ const routes = [
     component: () => import("@/views/user/LoginView"),
   },
   {
-    path: "/article/list",
+    path: "/articles",
     name: "list",
     component: () => import("@/views/article/ArticleListView"),
   },
   {
-    path: "/article/detail",
-    name: "detail",
+    path: "/view",
+    name: "view",
     component: () => import("@/views/article/ArticleDetailView"),
   },
   {
-    path: "/article/write",
+    path: "/write",
     name: "write",
     component: () => import("@/views/article/ArticleWriteView"),
     meta: { requiresAuth: true },

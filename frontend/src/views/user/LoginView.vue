@@ -43,7 +43,7 @@ export default {
     };
   },
   methods: {
-    login: function () {
+    login() {
       login(this.username, this.password)
         .then((response) => {
           const token = response.data;

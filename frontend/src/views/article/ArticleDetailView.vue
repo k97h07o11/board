@@ -40,7 +40,7 @@ export default {
         let data = response.data;
         this.title = data.title;
         this.content = data.content;
-        this.writerId = data.user.id;
+        this.writerId = data.userId;
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +53,7 @@ export default {
           .then((response) => {
             console.log(response);
             alert("게시글 삭제 완료");
-            this.$router.push("/article/list");
+            this.$router.push("/articles");
           })
           .catch((error) => {
             console.log(error);

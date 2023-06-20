@@ -39,14 +39,14 @@ export default {
     };
   },
   methods: {
-    writeArticle: function () {
+    writeArticle() {
       writeArticle({
         title: this.title,
         content: this.content,
       })
         .then((response) => {
           const articleId = response.data;
-          this.$router.push(`/article/detail?articleId=${articleId}`);
+          this.$router.push(`/view?articleId=${articleId}`);
         })
         .catch((error) => {
           console.log(error);
