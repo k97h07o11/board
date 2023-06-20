@@ -20,7 +20,7 @@ import { getArticle, deleteArticle } from "@/api/article";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "ArticleDetailView",
+  name: "ArticleView",
   data() {
     return {
       articleId: null,

@@ -28,7 +28,7 @@ const routes = [
   {
     path: "/view",
     name: "view",
-    component: () => import("@/views/article/ArticleDetailView"),
+    component: () => import("@/views/article/ArticleView"),
   },
   {
     path: "/write",
