@@ -6,7 +6,9 @@
       </b-card-text>
 
       <div v-if="isWriter" class="d-flex justify-content-end gap-3">
-        <b-button href="#" variant="warning">수정</b-button>
+        <b-button :to="`/write?articleId=${articleId}`" variant="warning">
+          수정
+        </b-button>
         <b-button variant="danger" @click="deleteArticle">삭제</b-button>
       </div>
     </b-card>

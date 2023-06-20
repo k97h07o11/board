@@ -18,7 +18,7 @@
         ></b-form-textarea>
 
         <div class="clearfix">
-          <b-button variant="primary" class="float-right" @click="writeArticle">
+          <b-button variant="primary" class="float-right" @click="register">
             등록
           </b-button>
         </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { writeArticle } from "@/api/article";
+import { getArticle, writeArticle, editArticle } from "@/api/article";
 
 export default {
   name: "ArticleWriteView",
@@ -38,7 +38,27 @@ export default {
       content: "",
     };
   },
+  created() {
+    if (this.$route.query.articleId !== undefined) {
+      getArticle(this.$route.query.articleId)
+        .then((response) => {
+          let data = response.data;
+          this.title = data.title;
+          this.content = data.content;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  },
   methods: {
+    register: function () {
+      if (this.$route.query.articleId === undefined) {
+        this.writeArticle();
+      } else {
+        this.editArticle();
+      }
+    },
     writeArticle() {
       writeArticle({
         title: this.title,
@@ -47,6 +67,19 @@ export default {
         .then((response) => {
           const articleId = response.data;
           this.$router.push(`/view?articleId=${articleId}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    editArticle() {
+      editArticle(this.$route.query.articleId, {
+        title: this.title,
+        content: this.content,
+      })
+        .then((response) => {
+          console.log(response);
+          this.$router.push(`/view?articleId=${this.$route.query.articleId}`);
         })
         .catch((error) => {
           console.log(error);
