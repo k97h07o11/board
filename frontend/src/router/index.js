@@ -19,6 +19,10 @@ const routes = [
     path: "/login",
     name: "login",
     component: () => import("@/views/user/LoginView"),
+    beforeEnter: (to, from, next) => {
+      to.query.url = from.fullPath;
+      next();
+    },
   },
   {
     path: "/articles",

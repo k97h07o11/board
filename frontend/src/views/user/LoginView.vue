@@ -48,7 +48,7 @@ export default {
         .then((response) => {
           const token = response.data;
           this.$store.dispatch("login", token);
-          this.$router.push("/");
+          this.$router.push(this.$route.query.url ?? "/");
         })
         .catch((error) => {
           console.log(error);
