@@ -62,6 +62,7 @@
 
 <script>
 import { getArticle, deleteArticle } from "@/api/article";
+import { getComments } from "@/api/comment";
 import { mapGetters } from "vuex";
 import CommentWriter from "@/components/CommentWriter.vue";
 
@@ -77,22 +78,7 @@ export default {
       content: null,
       writerId: null,
       newComment: "",
-      comments: [
-        {
-          id: 1,
-          content: "댓글 1",
-          userId: 1,
-          username: "username",
-          createdDate: "YYYY-MM-DD",
-        },
-        {
-          id: 2,
-          content: "댓글 2",
-          userId: 2,
-          username: "k97h07o11",
-          createdDate: "YYYY-MM-DD",
-        },
-      ],
+      comments: [],
       editingComment: {
         id: null,
         content: null,
@@ -117,6 +103,8 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+
+    this.getComments();
   },
   methods: {
     deleteArticle() {
@@ -131,6 +119,15 @@ export default {
             console.log(error);
           });
       }
+    },
+    getComments() {
+      getComments(this.articleId)
+        .then((response) => {
+          this.comments = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     editComment(comment) {
       this.editingComment.content = comment.content;
