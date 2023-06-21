@@ -120,7 +120,6 @@ export default {
         deleteArticle(this.articleId)
           .then((response) => {
             console.log(response);
-            alert("게시글 삭제 완료");
             this.$router.push("/articles");
           })
           .catch((error) => {
