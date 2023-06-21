@@ -44,7 +44,9 @@
                 <b-dropdown-item @click="editComment(comment)">
                   수정
                 </b-dropdown-item>
-                <b-dropdown-item href="#">삭제</b-dropdown-item>
+                <b-dropdown-item @click="deleteComment(comment)">
+                  삭제
+                </b-dropdown-item>
               </b-dropdown>
             </template>
             <CommentWriter
@@ -62,7 +64,7 @@
 
 <script>
 import { getArticle, deleteArticle } from "@/api/article";
-import { getComments, writeComment } from "@/api/comment";
+import { getComments, writeComment, deleteComment } from "@/api/comment";
 import { mapGetters } from "vuex";
 import CommentWriter from "@/components/CommentWriter.vue";
 
@@ -149,6 +151,18 @@ export default {
     cancelEditComment() {
       this.editingComment.id = null;
       this.editingComment.content = null;
+    },
+    deleteComment(comment) {
+      if (confirm("댓글을 삭제하시겠습니까?")) {
+        deleteComment(comment.id)
+          .then((response) => {
+            console.log(response);
+            this.getComments();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };

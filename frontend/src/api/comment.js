@@ -18,7 +18,11 @@ function editComment(commentId, data) {
 }
 
 function deleteComment(commentId) {
-  return http.delete(`/comments/${commentId}`);
+  return http.delete(`/comments/${commentId}`, {
+    headers: {
+      Authorization: `Bearer ${store.state.token}`,
+    },
+  });
 }
 
 export { getComments, writeComment, editComment, deleteComment };
