@@ -80,9 +80,11 @@ import CommentWriter from "@/components/CommentWriter.vue";
 
 export default {
   name: "ArticleView",
+
   components: {
     CommentWriter,
   },
+
   filters: {
     formatDate(dateString) {
       const date = new Date(dateString);
@@ -94,6 +96,7 @@ export default {
       return `${year}-${month}-${day} ${hours}:${minutes}`;
     },
   },
+
   data() {
     return {
       articleId: null,
@@ -113,12 +116,15 @@ export default {
       },
     };
   },
+
   computed: {
     ...mapGetters(["isAuthenticated", "getUser"]),
+
     isWriter() {
       return this.getUser == this.writer.id;
     },
   },
+
   created() {
     this.articleId = this.$route.query.articleId;
     getArticle(this.articleId)
@@ -137,6 +143,7 @@ export default {
 
     this.getComments();
   },
+
   methods: {
     deleteArticle() {
       if (confirm("게시글을 삭제하시겠습니까?")) {
@@ -150,6 +157,7 @@ export default {
           });
       }
     },
+
     getComments() {
       getComments(this.articleId)
         .then((response) => {
@@ -159,6 +167,7 @@ export default {
           console.log(error);
         });
     },
+
     writeComment() {
       writeComment(this.articleId, {
         content: this.newComment,
@@ -172,14 +181,17 @@ export default {
           console.log(error);
         });
     },
+
     editComment(comment) {
       this.editingComment.content = comment.content;
       this.editingComment.id = comment.id;
     },
+
     cancelEditComment() {
       this.editingComment.id = null;
       this.editingComment.content = null;
     },
+
     modifyComment() {
       modifyComment(this.editingComment.id, {
         content: this.editingComment.content,
@@ -194,6 +206,7 @@ export default {
           console.log(error);
         });
     },
+
     deleteComment(comment) {
       if (confirm("댓글을 삭제하시겠습니까?")) {
         deleteComment(comment.id)
@@ -209,17 +222,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.gap-3 {
-  gap: 1rem !important;
-}
-
-.top-0 {
-  top: 0 !important;
-}
-
-.end-0 {
-  right: 0 !important;
-}
-</style>

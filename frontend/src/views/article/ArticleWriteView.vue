@@ -32,12 +32,14 @@ import { getArticle, writeArticle, editArticle } from "@/api/article";
 
 export default {
   name: "ArticleWriteView",
+
   data() {
     return {
       title: "",
       content: "",
     };
   },
+
   created() {
     if (this.$route.query.articleId !== undefined) {
       getArticle(this.$route.query.articleId)
@@ -51,6 +53,7 @@ export default {
         });
     }
   },
+
   methods: {
     register: function () {
       if (this.$route.query.articleId === undefined) {
@@ -59,6 +62,7 @@ export default {
         this.editArticle();
       }
     },
+
     writeArticle() {
       writeArticle({
         title: this.title,
@@ -72,6 +76,7 @@ export default {
           console.log(error);
         });
     },
+
     editArticle() {
       editArticle(this.$route.query.articleId, {
         title: this.title,

@@ -35,8 +35,36 @@ export default {
   computed: {
     ...mapGetters(["isAuthenticated", "getUser"]),
   },
+
   methods: {
     ...mapActions(["logout"]),
   },
 };
 </script>
+
+<style>
+.vr {
+  display: inline-block;
+  align-self: stretch;
+  width: 1px;
+  min-height: 1em;
+  background-color: currentColor;
+  opacity: 0.25;
+}
+
+.gap-3 {
+  gap: 1rem !important;
+}
+
+.border-2 {
+  border-width: 2px;
+}
+
+.top-0 {
+  top: 0 !important;
+}
+
+.end-0 {
+  right: 0 !important;
+}
+</style>

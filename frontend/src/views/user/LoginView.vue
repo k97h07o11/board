@@ -36,12 +36,14 @@ import { login } from "@/api/user";
 
 export default {
   name: "LoginView",
+
   data() {
     return {
       username: "",
       password: "",
     };
   },
+
   methods: {
     login() {
       login(this.username, this.password)
@@ -58,18 +60,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.vr {
-  display: inline-block;
-  align-self: stretch;
-  width: 1px;
-  min-height: 1em;
-  background-color: currentColor;
-  opacity: 0.25;
-}
-
-.gap-3 {
-  gap: 1rem !important;
-}
-</style>

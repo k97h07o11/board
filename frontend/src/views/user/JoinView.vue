@@ -29,12 +29,14 @@ import { join } from "@/api/user";
 
 export default {
   name: "JoinView",
+
   data() {
     return {
       username: "",
       password: "",
     };
   },
+
   methods: {
     join() {
       join({

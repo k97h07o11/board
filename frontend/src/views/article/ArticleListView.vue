@@ -41,6 +41,7 @@ function isToday(date) {
 
 export default {
   name: "ArticleListView",
+
   filters: {
     formatDate(dateString) {
       const date = new Date(dateString);
@@ -56,6 +57,7 @@ export default {
       }
     },
   },
+
   data() {
     return {
       fields: [
@@ -71,12 +73,15 @@ export default {
       perPage: 20,
     };
   },
+
   watch: {
     currentPage: "getArticleList",
   },
+
   created() {
     this.getArticleList();
   },
+
   methods: {
     getArticleList() {
       getArticleList(this.currentPage - 1)

@@ -1,10 +1,10 @@
 import http from "@/api/index";
 
-function join(data) {
+export function join(data) {
   return http.post(`/users`, data);
 }
 
-function login(username, password) {
+export function login(username, password) {
   return http.post(
     `/auth/token`,
     {
@@ -18,5 +18,3 @@ function login(username, password) {
     }
   );
 }
-
-export { join, login };

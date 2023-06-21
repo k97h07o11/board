@@ -1,15 +1,15 @@
 import http from "@/api/index";
 import store from "@/store/index";
 
-function getArticleList(pageNum) {
+export function getArticleList(pageNum) {
   return http.get(`/articles?page=${pageNum}`);
 }
 
-function getArticle(articleId) {
+export function getArticle(articleId) {
   return http.get(`/articles/${articleId}`);
 }
 
-function writeArticle(data) {
+export function writeArticle(data) {
   return http.post(`/articles`, data, {
     headers: {
       Authorization: `Bearer ${store.state.token}`,
@@ -17,7 +17,7 @@ function writeArticle(data) {
   });
 }
 
-function editArticle(articleId, data) {
+export function editArticle(articleId, data) {
   return http.put(`/articles/${articleId}`, data, {
     headers: {
       Authorization: `Bearer ${store.state.token}`,
@@ -25,12 +25,10 @@ function editArticle(articleId, data) {
   });
 }
 
-function deleteArticle(articleId) {
+export function deleteArticle(articleId) {
   return http.delete(`/articles/${articleId}`, {
     headers: {
       Authorization: `Bearer ${store.state.token}`,
     },
   });
 }
-
-export { getArticleList, getArticle, writeArticle, editArticle, deleteArticle };

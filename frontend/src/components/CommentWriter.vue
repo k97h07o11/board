@@ -40,46 +40,34 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "CommentWriter",
+
   props: {
     value: {
       type: String,
     },
+
     edit: {
       type: Boolean,
       default: false,
     },
   },
+
   computed: {
     ...mapGetters(["isAuthenticated", "getUser"]),
   },
+
   methods: {
     onUpdate(value) {
       this.$emit("input", value);
     },
+
     cancel() {
       this.$emit("cancel");
     },
+
     register() {
       this.$emit("register");
     },
   },
 };
 </script>
-
-<style scoped>
-.gap-3 {
-  gap: 1rem !important;
-}
-
-.border-2 {
-  border-width: 2px;
-}
-
-.top-0 {
-  top: 0 !important;
-}
-
-.end-0 {
-  right: 0 !important;
-}
-</style>
