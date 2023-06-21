@@ -1,66 +1,70 @@
 <template>
-  <div>
-    <b-card :title="title" title-tag="h2">
-      <b-card-text>
-        {{ content }}
-      </b-card-text>
-
-      <div v-if="isWriter" class="d-flex justify-content-end gap-3">
-        <b-button :to="`/write?articleId=${articleId}`" variant="warning">
-          수정
-        </b-button>
-        <b-button variant="danger" @click="deleteArticle">삭제</b-button>
+  <b-card>
+    <div>
+      <h2>{{ title }}</h2>
+      <div class="font-weight-bold">{{ writer.username }}</div>
+      <div class="text-muted">
+        <span>{{ createdDate | formatDate }}</span>
+        <span class="ml-2">조회 {{ view }}</span>
       </div>
+    </div>
 
-      <hr />
+    <hr />
 
-      <div>
-        <h3>댓글</h3>
+    <div class="py-5">
+      {{ content }}
+    </div>
 
-        <CommentWriter v-model="newComment" @register="writeComment" />
+    <div v-if="isWriter" class="d-flex justify-content-end gap-3">
+      <b-button :to="`/write?articleId=${articleId}`" variant="warning">
+        수정
+      </b-button>
+      <b-button variant="danger" @click="deleteArticle">삭제</b-button>
+    </div>
 
-        <b-list-group flush>
-          <b-list-group-item v-for="comment in comments" :key="comment.id">
-            <template
-              v-if="!isAuthenticated || comment.id != editingComment.id"
+    <hr />
+
+    <div>
+      <h3>댓글 {{ comments.length }}</h3>
+
+      <CommentWriter v-model="newComment" @register="writeComment" />
+
+      <b-list-group flush>
+        <b-list-group-item v-for="comment in comments" :key="comment.id">
+          <template v-if="!isAuthenticated || comment.id != editingComment.id">
+            <div class="font-weight-bold">{{ comment.username }}</div>
+            <div>{{ comment.content }}</div>
+            <div class="text-muted">{{ comment.createdDate | formatDate }}</div>
+            <b-dropdown
+              v-if="comment.userId == getUser"
+              right
+              variant="link"
+              toggle-class="text-decoration-none shadow-none p-0"
+              no-caret
+              class="position-absolute top-0 end-0 mt-3 mr-3"
             >
-              <div class="font-weight-bold">{{ comment.username }}</div>
-              <div>{{ comment.content }}</div>
-              <div>{{ comment.createdDate }}</div>
-              <b-dropdown
-                v-if="comment.userId == getUser"
-                right
-                variant="link"
-                toggle-class="text-decoration-none shadow-none p-0"
-                no-caret
-                class="position-absolute top-0 end-0 mt-3 mr-3"
-              >
-                <template #button-content>
-                  <b-icon
-                    icon="three-dots-vertical"
-                    variant="secondary"
-                  ></b-icon>
-                </template>
-                <b-dropdown-item @click="editComment(comment)">
-                  수정
-                </b-dropdown-item>
-                <b-dropdown-item @click="deleteComment(comment)">
-                  삭제
-                </b-dropdown-item>
-              </b-dropdown>
-            </template>
-            <CommentWriter
-              v-else
-              v-model="editingComment.content"
-              edit
-              @cancel="cancelEditComment"
-              @register="modifyComment"
-            />
-          </b-list-group-item>
-        </b-list-group>
-      </div>
-    </b-card>
-  </div>
+              <template #button-content>
+                <b-icon icon="three-dots-vertical" variant="secondary"></b-icon>
+              </template>
+              <b-dropdown-item @click="editComment(comment)">
+                수정
+              </b-dropdown-item>
+              <b-dropdown-item @click="deleteComment(comment)">
+                삭제
+              </b-dropdown-item>
+            </b-dropdown>
+          </template>
+          <CommentWriter
+            v-else
+            v-model="editingComment.content"
+            edit
+            @cancel="cancelEditComment"
+            @register="modifyComment"
+          />
+        </b-list-group-item>
+      </b-list-group>
+    </div>
+  </b-card>
 </template>
 
 <script>
@@ -79,12 +83,28 @@ export default {
   components: {
     CommentWriter,
   },
+  filters: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    },
+  },
   data() {
     return {
       articleId: null,
       title: null,
       content: null,
-      writerId: null,
+      writer: {
+        id: null,
+        username: null,
+      },
+      createdDate: null,
+      view: null,
       newComment: "",
       comments: [],
       editingComment: {
@@ -96,7 +116,7 @@ export default {
   computed: {
     ...mapGetters(["isAuthenticated", "getUser"]),
     isWriter() {
-      return this.getUser == this.writerId;
+      return this.getUser == this.writer.id;
     },
   },
   created() {
@@ -106,7 +126,10 @@ export default {
         let data = response.data;
         this.title = data.title;
         this.content = data.content;
-        this.writerId = data.userId;
+        this.writer.id = data.userId;
+        this.writer.username = data.username;
+        this.createdDate = data.createdDate;
+        this.view = data.view;
       })
       .catch((error) => {
         console.log(error);
