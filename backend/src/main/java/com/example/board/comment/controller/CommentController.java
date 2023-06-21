@@ -3,9 +3,8 @@ package com.example.board.comment.controller;
 import com.example.board.comment.dto.CommentRequestDto;
 import com.example.board.comment.dto.CommentResponseDto;
 import com.example.board.comment.service.CommentService;
-import com.example.board.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,9 +26,10 @@ public class CommentController {
     public void postComment(
             @PathVariable Long articleId,
             @RequestBody CommentRequestDto commentRequestDto,
-            @AuthenticationPrincipal UserDetailsImpl userDetails
+            Authentication authentication
     ) {
-        commentService.writeComment(articleId, commentRequestDto, userDetails.getUser());
+        Long userId = Long.parseLong(authentication.getName());
+        commentService.writeComment(articleId, commentRequestDto, userId);
     }
 
     @PutMapping("/comments/{commentId}")

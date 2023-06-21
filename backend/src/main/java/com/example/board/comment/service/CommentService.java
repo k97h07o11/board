@@ -7,6 +7,7 @@ import com.example.board.comment.dto.CommentResponseDto;
 import com.example.board.comment.entity.Comment;
 import com.example.board.comment.repository.CommentRepository;
 import com.example.board.user.entity.User;
+import com.example.board.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ public class CommentService {
 
     private final ArticleRepository articleRepository;
 
+    private final UserRepository userRepository;
+
     public List<CommentResponseDto> getCommentsByArticleId(Long articleId) {
         List<Comment> comments = commentRepository.findAllByArticleId(articleId);
         return comments.stream()
@@ -29,11 +32,13 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
-    public void writeComment(Long articleId, CommentRequestDto commentRequestDto, User user) {
+    public void writeComment(Long articleId, CommentRequestDto commentRequestDto, Long userId) {
         Comment comment = commentRequestDto.toEntity();
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(NoSuchElementException::new);
         comment.setArticle(article);
+        User user = userRepository.findById(userId)
+                .orElseThrow(NoSuchElementException::new);
         comment.setUser(user);
         commentRepository.save(comment);
     }
