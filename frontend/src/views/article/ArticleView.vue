@@ -17,7 +17,7 @@
       <div>
         <h3>댓글</h3>
 
-        <CommentWriter v-model="newComment" />
+        <CommentWriter v-model="newComment" @register="writeComment" />
 
         <b-list-group flush>
           <b-list-group-item v-for="comment in comments" :key="comment.id">
@@ -62,7 +62,7 @@
 
 <script>
 import { getArticle, deleteArticle } from "@/api/article";
-import { getComments } from "@/api/comment";
+import { getComments, writeComment } from "@/api/comment";
 import { mapGetters } from "vuex";
 import CommentWriter from "@/components/CommentWriter.vue";
 
@@ -124,6 +124,19 @@ export default {
       getComments(this.articleId)
         .then((response) => {
           this.comments = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    writeComment() {
+      writeComment(this.articleId, {
+        content: this.newComment,
+      })
+        .then((response) => {
+          console.log(response);
+          this.newComment = "";
+          this.getComments();
         })
         .catch((error) => {
           console.log(error);

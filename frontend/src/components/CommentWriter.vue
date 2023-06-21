@@ -26,7 +26,7 @@
         <b-button v-if="edit" variant="secondary" @click="cancel">
           취소
         </b-button>
-        <b-button variant="primary">등록</b-button>
+        <b-button variant="primary" @click="register">등록</b-button>
       </div>
     </template>
     <b-card-text v-else class="text-muted font-weight-bold">
@@ -58,6 +58,9 @@ export default {
     },
     cancel() {
       this.$emit("cancel");
+    },
+    register() {
+      this.$emit("register");
     },
   },
 };
