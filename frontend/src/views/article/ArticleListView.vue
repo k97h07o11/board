@@ -6,6 +6,10 @@
           {{ data.value }}
         </router-link>
       </template>
+
+      <template #cell(createdDate)="data">
+        {{ data.value | formatDate }}
+      </template>
     </b-table>
 
     <div class="clearfix">
@@ -26,8 +30,32 @@
 <script>
 import { getArticleList } from "@/api/article";
 
+function isToday(date) {
+  const today = new Date();
+  return (
+    date.getFullYear() === today.getFullYear() &&
+    date.getMonth() === today.getMonth() &&
+    date.getDate() === today.getDate()
+  );
+}
+
 export default {
   name: "ArticleListView",
+  filters: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      if (isToday(date)) {
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        return `${hours}:${minutes}`;
+      } else {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+    },
+  },
   data() {
     return {
       fields: [
