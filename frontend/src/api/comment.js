@@ -13,8 +13,12 @@ function writeComment(articleId, data) {
   });
 }
 
-function editComment(commentId, data) {
-  return http.put(`/comments/${commentId}`, data);
+function modifyComment(commentId, data) {
+  return http.put(`/comments/${commentId}`, data, {
+    headers: {
+      Authorization: `Bearer ${store.state.token}`,
+    },
+  });
 }
 
 function deleteComment(commentId) {
@@ -25,4 +29,4 @@ function deleteComment(commentId) {
   });
 }
 
-export { getComments, writeComment, editComment, deleteComment };
+export { getComments, writeComment, modifyComment, deleteComment };

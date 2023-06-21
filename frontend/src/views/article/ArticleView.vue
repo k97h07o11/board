@@ -54,6 +54,7 @@
               v-model="editingComment.content"
               edit
               @cancel="cancelEditComment"
+              @register="modifyComment"
             />
           </b-list-group-item>
         </b-list-group>
@@ -64,7 +65,12 @@
 
 <script>
 import { getArticle, deleteArticle } from "@/api/article";
-import { getComments, writeComment, deleteComment } from "@/api/comment";
+import {
+  getComments,
+  writeComment,
+  modifyComment,
+  deleteComment,
+} from "@/api/comment";
 import { mapGetters } from "vuex";
 import CommentWriter from "@/components/CommentWriter.vue";
 
@@ -151,6 +157,20 @@ export default {
     cancelEditComment() {
       this.editingComment.id = null;
       this.editingComment.content = null;
+    },
+    modifyComment() {
+      modifyComment(this.editingComment.id, {
+        content: this.editingComment.content,
+      })
+        .then((response) => {
+          console.log(response);
+          this.editingComment.id = null;
+          this.editingComment.content = null;
+          this.getComments();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     deleteComment(comment) {
       if (confirm("댓글을 삭제하시겠습니까?")) {
