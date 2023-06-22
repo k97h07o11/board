@@ -1,21 +1,28 @@
 <template>
   <div>
+    <h2>글쓰기</h2>
+
     <b-card>
       <b-form>
-        <b-form-input
-          type="text"
-          id="title"
-          v-model="title"
-          placeholder="제목"
-        ></b-form-input>
+        <b-form-group>
+          <b-form-input
+            type="text"
+            id="title"
+            v-model="title"
+            placeholder="제목"
+          ></b-form-input>
+        </b-form-group>
 
-        <b-form-textarea
-          id="content"
-          v-model="content"
-          placeholder="내용"
-          rows="6"
-          no-resize
-        ></b-form-textarea>
+        <b-form-group>
+          <b-form-textarea
+            id="content"
+            v-model="content"
+            placeholder="내용"
+            rows="10"
+            max-rows="20"
+            no-resize
+          ></b-form-textarea>
+        </b-form-group>
 
         <div class="clearfix">
           <b-button variant="primary" class="float-right" @click="register">
