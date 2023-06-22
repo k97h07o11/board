@@ -30,7 +30,7 @@
       </div>
     </template>
     <b-card-text v-else class="text-muted font-weight-bold">
-      로그인이 필요한 서비스입니다.
+      <router-link to="/login">로그인</router-link>이 필요한 서비스입니다.
     </b-card-text>
   </b-card>
 </template>
