@@ -121,7 +121,7 @@ export default {
     ...mapGetters(["isAuthenticated", "getUser"]),
 
     isWriter() {
-      return this.getUser === this.writer.id;
+      return this.getUser == this.writer.id;
     },
   },
 
