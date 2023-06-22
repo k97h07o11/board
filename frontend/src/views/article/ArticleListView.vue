@@ -1,6 +1,8 @@
 <template>
   <div>
-    <b-table :fields="fields" :items="items">
+    <h2>게시판</h2>
+
+    <b-table :fields="fields" :items="items" class="border-bottom text-center">
       <template #cell(title)="data">
         <router-link :to="`/view?articleId=${data.item.id}`">
           {{ data.value }}
