@@ -1,24 +1,43 @@
 <template>
   <div>
+    <h2 class="text-center">로그인</h2>
+
     <b-card>
       <b-form>
-        <b-form-input
-          type="text"
-          id="username"
-          name="username"
-          v-model="username"
-          placeholder="아이디"
-        ></b-form-input>
+        <b-form-group>
+          <b-input-group size="lg">
+            <b-input-group-prepend is-text>
+              <b-icon icon="person"></b-icon>
+            </b-input-group-prepend>
+            <b-form-input
+              type="text"
+              id="username"
+              name="username"
+              v-model="username"
+              placeholder="아이디"
+            >
+            </b-form-input>
+          </b-input-group>
+        </b-form-group>
 
-        <b-form-input
-          type="password"
-          id="password"
-          name="password"
-          v-model="password"
-          placeholder="비밀번호"
-        ></b-form-input>
+        <b-form-group>
+          <b-input-group size="lg">
+            <b-input-group-prepend is-text>
+              <b-icon icon="lock"></b-icon>
+            </b-input-group-prepend>
+            <b-form-input
+              type="password"
+              id="password"
+              name="password"
+              v-model="password"
+              placeholder="비밀번호"
+            ></b-form-input>
+          </b-input-group>
+        </b-form-group>
 
-        <b-button variant="primary" block @click="login">로그인</b-button>
+        <b-button variant="primary" block @click="login" size="lg">
+          로그인
+        </b-button>
       </b-form>
     </b-card>
     <div class="d-flex justify-content-center gap-3 mt-3">
