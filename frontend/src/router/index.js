@@ -20,7 +20,7 @@ const routes = [
     name: "login",
     component: () => import("@/views/user/LoginView"),
     beforeEnter: (to, from, next) => {
-      to.query.url = from.fullPath;
+      to.query.url ??= from.fullPath;
       next();
     },
   },
@@ -49,15 +49,15 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!store.getters.isAuthenticated) {
-      alert("로그인이 필요한 서비스입니다.");
-      next({
-        path: "/login",
-      });
-    } else {
-      next();
-    }
+  if (
+    to.matched.some((record) => record.meta.requiresAuth) &&
+    !store.getters.isAuthenticated
+  ) {
+    alert("로그인이 필요한 서비스입니다.");
+    next({
+      path: "/login",
+      query: { url: to.fullPath },
+    });
   } else {
     next();
   }
