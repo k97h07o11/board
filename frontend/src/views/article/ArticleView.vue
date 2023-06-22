@@ -99,15 +99,15 @@ export default {
 
   data() {
     return {
-      articleId: null,
-      title: null,
-      content: null,
+      articleId: undefined,
+      title: undefined,
+      content: undefined,
       writer: {
-        id: null,
-        username: null,
+        id: undefined,
+        username: undefined,
       },
-      createdDate: null,
-      view: null,
+      createdDate: undefined,
+      view: undefined,
       newComment: "",
       comments: [],
       editingComment: {
@@ -121,7 +121,7 @@ export default {
     ...mapGetters(["isAuthenticated", "getUser"]),
 
     isWriter() {
-      return this.getUser == this.writer.id;
+      return this.getUser === this.writer.id;
     },
   },
 
