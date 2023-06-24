@@ -3,11 +3,15 @@ package com.example.board.article.dto;
 import com.example.board.article.entity.Article;
 import lombok.Getter;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 public class ArticleRequestDto {
 
+    @NotBlank
     private String title;
 
+    @NotBlank
     private String content;
 
     public Article toEntity() {

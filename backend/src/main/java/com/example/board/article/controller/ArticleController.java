@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 public class ArticleController {
@@ -32,7 +34,7 @@ public class ArticleController {
 
     @PostMapping("/articles")
     public Long postArticle(
-            @RequestBody ArticleRequestDto articleRequestDto,
+            @RequestBody @Valid ArticleRequestDto articleRequestDto,
             Authentication authentication
     ) {
         Long userId = Long.parseLong(authentication.getName());
@@ -42,7 +44,7 @@ public class ArticleController {
     @PutMapping("/articles/{articleId}")
     public void putArticle(
             @PathVariable Long articleId,
-            @RequestBody ArticleRequestDto articleRequestDto
+            @RequestBody @Valid ArticleRequestDto articleRequestDto
     ) {
         articleService.editArticle(articleId, articleRequestDto);
     }
