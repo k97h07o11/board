@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class UserController {
 
     @PostMapping("/users")
     public void join(
-            @RequestBody JoinRequestDto joinRequestDto
+            @RequestBody @Valid JoinRequestDto joinRequestDto
     ) {
         userService.join(joinRequestDto);
     }
