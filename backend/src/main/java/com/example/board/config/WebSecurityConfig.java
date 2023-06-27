@@ -46,8 +46,8 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers(HttpMethod.POST, "/users/join").permitAll()
-                        .antMatchers(HttpMethod.POST, "/users/login").permitAll()
+                        .antMatchers(HttpMethod.POST, "/users").permitAll()
+                        .antMatchers(HttpMethod.POST, "/auth/token").permitAll()
                         .antMatchers(HttpMethod.GET, "/articles/**").permitAll()
                         .anyRequest().authenticated()
                 )
