@@ -16,8 +16,15 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public void join(JoinRequestDto joinRequestDto) {
+        if (!validateUsername(joinRequestDto.getUsername())) {
+            throw new IllegalArgumentException();
+        }
         User user = joinRequestDto.toEntity();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public boolean validateUsername(String username) {
+        return !userRepository.existsByUsername(username);
     }
 }

@@ -1,17 +1,20 @@
 package com.example.board.user.dto;
 
 import com.example.board.user.entity.User;
-import com.example.board.validation.Password;
-import com.example.board.validation.Username;
 import lombok.Getter;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Getter
 public class JoinRequestDto {
 
-    @Username
+    @NotNull
+    @Pattern(regexp = "(?=.*[a-z])(?=.*[0-9])[a-z0-9]{6,20}")
     private String username;
 
-    @Password
+    @NotNull
+    @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}")
     private String password;
 
     public User toEntity() {
