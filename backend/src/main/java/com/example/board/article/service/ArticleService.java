@@ -57,7 +57,9 @@ public class ArticleService {
 
     @Transactional
     public void deleteArticle(Long articleId) {
-        commentRepository.deleteAllByArticleId(articleId);
-        articleRepository.deleteById(articleId);
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(NoSuchElementException::new);
+        commentRepository.deleteAllByArticle(article);
+        articleRepository.delete(article);
     }
 }
