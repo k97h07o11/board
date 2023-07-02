@@ -10,6 +10,7 @@ import com.example.board.user.entity.User;
 import com.example.board.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,6 +26,7 @@ public class CommentService {
 
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public List<CommentResponseDto> getCommentsByArticleId(Long articleId) {
         List<Comment> comments = commentRepository.findAllByArticleId(articleId);
         return comments.stream()
@@ -32,6 +34,7 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void writeComment(Long articleId, CommentRequestDto commentRequestDto, Long userId) {
         Comment comment = commentRequestDto.toEntity();
         Article article = articleRepository.findById(articleId)
@@ -43,13 +46,14 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    @Transactional
     public void editComment(Long commentId, CommentRequestDto commentRequestDto) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(NoSuchElementException::new);
         comment.edit(commentRequestDto.getContent());
-        commentRepository.save(comment);
     }
 
+    @Transactional
     public void deleteComment(Long commentId) {
         commentRepository.deleteById(commentId);
     }

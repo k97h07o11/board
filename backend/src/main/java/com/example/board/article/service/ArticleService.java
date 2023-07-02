@@ -26,17 +26,20 @@ public class ArticleService {
 
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public Page<ArticleListResponseDto> getArticleList(Pageable pageable) {
         Page<Article> articles = articleRepository.findAll(pageable);
         return articles.map(ArticleListResponseDto::new);
     }
 
+    @Transactional(readOnly = true)
     public ArticleResponseDto getArticle(Long articleId) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(NoSuchElementException::new);
         return new ArticleResponseDto(article);
     }
 
+    @Transactional
     public Long writeArticle(ArticleRequestDto articleRequestDto, Long userId) {
         Article article = articleRequestDto.toEntity();
         User user = userRepository.findById(userId)
@@ -45,11 +48,11 @@ public class ArticleService {
         return articleRepository.save(article).getId();
     }
 
+    @Transactional
     public void editArticle(Long articleId, ArticleRequestDto articleRequestDto) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(NoSuchElementException::new);
         article.edit(articleRequestDto.getTitle(), articleRequestDto.getContent());
-        articleRepository.save(article);
     }
 
     @Transactional
