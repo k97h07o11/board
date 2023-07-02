@@ -9,11 +9,12 @@ import com.example.board.comment.repository.CommentRepository;
 import com.example.board.user.entity.User;
 import com.example.board.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,10 +39,10 @@ public class CommentService {
     public void writeComment(Long articleId, CommentRequestDto commentRequestDto, Long userId) {
         Comment comment = commentRequestDto.toEntity();
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         comment.setArticle(article);
         User user = userRepository.findById(userId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         comment.setUser(user);
         commentRepository.save(comment);
     }
@@ -49,12 +50,14 @@ public class CommentService {
     @Transactional
     public void editComment(Long commentId, CommentRequestDto commentRequestDto) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         comment.edit(commentRequestDto.getContent());
     }
 
     @Transactional
     public void deleteComment(Long commentId) {
-        commentRepository.deleteById(commentId);
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        commentRepository.delete(comment);
     }
 }

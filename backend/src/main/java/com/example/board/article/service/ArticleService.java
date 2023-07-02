@@ -11,10 +11,10 @@ import com.example.board.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +35,7 @@ public class ArticleService {
     @Transactional(readOnly = true)
     public ArticleResponseDto getArticle(Long articleId) {
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return new ArticleResponseDto(article);
     }
 
@@ -43,7 +43,7 @@ public class ArticleService {
     public Long writeArticle(ArticleRequestDto articleRequestDto, Long userId) {
         Article article = articleRequestDto.toEntity();
         User user = userRepository.findById(userId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         article.setUser(user);
         return articleRepository.save(article).getId();
     }
@@ -51,14 +51,14 @@ public class ArticleService {
     @Transactional
     public void editArticle(Long articleId, ArticleRequestDto articleRequestDto) {
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         article.edit(articleRequestDto.getTitle(), articleRequestDto.getContent());
     }
 
     @Transactional
     public void deleteArticle(Long articleId) {
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         commentRepository.deleteAllByArticle(article);
         articleRepository.delete(article);
     }
