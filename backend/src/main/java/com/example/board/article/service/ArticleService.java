@@ -34,7 +34,7 @@ public class ArticleService {
 
     @Transactional(readOnly = true)
     public ArticleResponseDto getArticle(Long articleId) {
-        Article article = articleRepository.findById(articleId)
+        Article article = articleRepository.findByIdWithUser(articleId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return new ArticleResponseDto(article);
     }
