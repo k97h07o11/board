@@ -1,7 +1,7 @@
 package com.example.board.security;
 
-import com.example.board.user.entity.User;
-import com.example.board.user.repository.UserRepository;
+import com.example.board.entity.User;
+import com.example.board.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,8 +1,8 @@
-package com.example.board.user.controller;
+package com.example.board.controller;
 
+import com.example.board.dto.JoinRequestDto;
 import com.example.board.security.UserDetailsImpl;
-import com.example.board.user.dto.JoinRequestDto;
-import com.example.board.user.service.UserService;
+import com.example.board.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

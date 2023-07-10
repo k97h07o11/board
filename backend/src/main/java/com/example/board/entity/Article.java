@@ -1,8 +1,5 @@
-package com.example.board.comment.entity;
+package com.example.board.entity;
 
-import com.example.board.article.entity.Article;
-import com.example.board.common.BaseTimeEntity;
-import com.example.board.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,22 +10,25 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Setter
-public class Comment extends BaseTimeEntity {
+public class Article extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
-    private String content;
+    private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Article article;
+    @Column(nullable = false)
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    public void edit(String content) {
+    private int view;
+
+    public void edit(String title, String content) {
+        this.title = title;
         this.content = content;
     }
 }

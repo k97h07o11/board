@@ -1,7 +1,7 @@
-package com.example.board.comment.repository;
+package com.example.board.repository;
 
-import com.example.board.article.entity.Article;
-import com.example.board.comment.entity.Comment;
+import com.example.board.entity.Article;
+import com.example.board.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,6 @@
-package com.example.board.comment.dto;
+package com.example.board.dto;
 
-import com.example.board.comment.entity.Comment;
+import com.example.board.entity.Comment;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;

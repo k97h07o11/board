@@ -1,8 +1,8 @@
-package com.example.board.user.service;
+package com.example.board.service;
 
-import com.example.board.user.dto.JoinRequestDto;
-import com.example.board.user.entity.User;
-import com.example.board.user.repository.UserRepository;
+import com.example.board.dto.JoinRequestDto;
+import com.example.board.entity.User;
+import com.example.board.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;

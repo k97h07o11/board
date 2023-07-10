@@ -1,13 +1,13 @@
-package com.example.board.article.service;
+package com.example.board.service;
 
-import com.example.board.article.dto.ArticleListResponseDto;
-import com.example.board.article.dto.ArticleRequestDto;
-import com.example.board.article.dto.ArticleResponseDto;
-import com.example.board.article.entity.Article;
-import com.example.board.article.repository.ArticleRepository;
-import com.example.board.comment.repository.CommentRepository;
-import com.example.board.user.entity.User;
-import com.example.board.user.repository.UserRepository;
+import com.example.board.dto.ArticleListResponseDto;
+import com.example.board.dto.ArticleRequestDto;
+import com.example.board.dto.ArticleResponseDto;
+import com.example.board.entity.Article;
+import com.example.board.entity.User;
+import com.example.board.repository.ArticleRepository;
+import com.example.board.repository.CommentRepository;
+import com.example.board.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

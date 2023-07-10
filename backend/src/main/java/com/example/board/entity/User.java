@@ -1,4 +1,4 @@
-package com.example.board.user.entity;
+package com.example.board.entity;
 
 import lombok.*;
 

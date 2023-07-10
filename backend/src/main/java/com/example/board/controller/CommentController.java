@@ -1,8 +1,8 @@
-package com.example.board.comment.controller;
+package com.example.board.controller;
 
-import com.example.board.comment.dto.CommentRequestDto;
-import com.example.board.comment.dto.CommentResponseDto;
-import com.example.board.comment.service.CommentService;
+import com.example.board.dto.CommentRequestDto;
+import com.example.board.dto.CommentResponseDto;
+import com.example.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;

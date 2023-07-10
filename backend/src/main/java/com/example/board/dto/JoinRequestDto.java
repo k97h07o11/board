@@ -1,6 +1,6 @@
-package com.example.board.user.dto;
+package com.example.board.dto;
 
-import com.example.board.user.entity.User;
+import com.example.board.entity.User;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;

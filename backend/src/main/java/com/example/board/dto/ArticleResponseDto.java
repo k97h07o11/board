@@ -1,6 +1,6 @@
-package com.example.board.article.dto;
+package com.example.board.dto;
 
-import com.example.board.article.entity.Article;
+import com.example.board.entity.Article;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

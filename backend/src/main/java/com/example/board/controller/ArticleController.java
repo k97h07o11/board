@@ -1,9 +1,9 @@
-package com.example.board.article.controller;
+package com.example.board.controller;
 
-import com.example.board.article.dto.ArticleListResponseDto;
-import com.example.board.article.dto.ArticleRequestDto;
-import com.example.board.article.dto.ArticleResponseDto;
-import com.example.board.article.service.ArticleService;
+import com.example.board.dto.ArticleListResponseDto;
+import com.example.board.dto.ArticleRequestDto;
+import com.example.board.dto.ArticleResponseDto;
+import com.example.board.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
