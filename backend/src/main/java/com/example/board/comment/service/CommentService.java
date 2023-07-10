@@ -29,7 +29,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentResponseDto> getCommentsByArticleId(Long articleId) {
-        List<Comment> comments = commentRepository.findAllByArticleId(articleId);
+        List<Comment> comments = commentRepository.findAllByArticleIdWithUser(articleId);
         return comments.stream()
                 .map(CommentResponseDto::new)
                 .collect(Collectors.toList());

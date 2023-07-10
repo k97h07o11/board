@@ -11,7 +11,8 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    List<Comment> findAllByArticleId(Long articleId);
+    @Query("SELECT c FROM Comment c JOIN FETCH c.user WHERE c.article.id = :articleId")
+    List<Comment> findAllByArticleIdWithUser(@Param("articleId") Long articleId);
 
     @Modifying
     @Query("DELETE FROM Comment c WHERE c.article = :article")
