@@ -49,6 +49,8 @@ public class WebSecurityConfig {
                         .antMatchers(HttpMethod.POST, "/users").permitAll()
                         .antMatchers(HttpMethod.POST, "/auth/token").permitAll()
                         .antMatchers(HttpMethod.GET, "/articles/**").permitAll()
+                        .antMatchers("/swagger-ui/**").permitAll()
+                        .antMatchers("/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
