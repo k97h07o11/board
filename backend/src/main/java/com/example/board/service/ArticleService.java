@@ -28,7 +28,7 @@ public class ArticleService {
 
     @Transactional(readOnly = true)
     public Page<ArticleListResponseDto> getArticleList(Pageable pageable) {
-        Page<Article> articles = articleRepository.findAll(pageable);
+        Page<Article> articles = articleRepository.findAllWithUser(pageable);
         return articles.map(ArticleListResponseDto::new);
     }
 
