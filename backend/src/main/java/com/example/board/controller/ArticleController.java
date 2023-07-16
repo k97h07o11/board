@@ -32,9 +32,10 @@ public class ArticleController {
     })
     @GetMapping("/articles")
     public Page<ArticleListResponseDto> getArticles(
-            Pageable pageable
+            Pageable pageable,
+            @RequestParam(required = false) String keyword
     ) {
-        return articleService.getArticleList(pageable);
+        return articleService.getArticleList(pageable, keyword);
     }
 
     @Operation(summary = "게시글 조회")
