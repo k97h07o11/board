@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/board
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  private:
+    key: classpath:app.key
+  public:
+    key: classpath:app.pub
+
+springdoc:
+  packages-to-scan: com.example.board.controller
+  default-produces-media-type: application/json
